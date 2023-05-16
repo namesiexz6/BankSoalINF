@@ -1,0 +1,49 @@
+@layout('layout.main')
+@section('body')
+  <div style="background-color: #A3C7E9;">
+    <div class="text-center">
+      <img src="assets/img/logo.png" alt="logo" class="mt-5 rounded">
+    </div>
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <form action="{{ route('/login')}}" method="POST">
+            <div class="card shadow-2-strong" style="border-radius: 1rem;">
+              <div class="card-body p-5 text-center">
+                <h3 class="mb-3">Login</h3>
+                
+                <div class="form-outline mb-3">
+                  @if(flashMessages.get('error'))
+                  <input type="text" id="username" name="username" class="form-control form-control-lg is-invalid" required/>
+                  <label class="form-label" for="username">Username</label>
+                  @else
+                  <input type="text" id="username" name="username" class="form-control form-control-lg" required/>
+                  <label class="form-label" for="username">Username</label>
+                  @endif
+                </div>                
+                <div class="form-outline mb-3">
+                  @if(flashMessages.get('error'))
+                  <input type="password" id="password" name="password" class="form-control form-control-lg is-invalid" required/>
+                  <label class="form-label" for="typePasswordX-2">Password</label>
+                  @else
+                  <input type="password" id="password" name="password" class="form-control form-control-lg" required/>
+                  <label class="form-label" for="typePasswordX-2">Password</label>
+                  @endif
+                </div>
+                <div class="form-check d-flex justify-content-start mb-3">
+                  @if(flashMessages.get('error'))
+                  <span class="text-xs text-red-700 dark:text-red-500" style="color: red;">{{flashMessages.get('error')}}</span>
+                  @endif
+                </div>
+               
+                <div class="d-grid">
+                  <Button class="btn btn-lg btn-block text-light" type="submit" style="background-color: #134F5C">Login</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+@endsection

@@ -1,0 +1,74 @@
+@layout('layout.main')
+@section('body')
+<div class="container mt-3">
+  <h2>Daftar Soal</h2>
+  @if(session.get('role') == 1)
+  <div class="d-flex">
+    <form action="{{ route('/soal')}}" method="post">
+      <input type="hidden" name="matakuliah_id" value="{{session.get('id_matakuliah')}}">
+      <button type="submit" name="edit" value="1">Upload</button>
+      <button type="submit" name="edit" value="3">Hapus</button>
+    </form>
+  </div>
+  @endif
+
+
+  
+  <table class="table table-bordered table-light table-striped my-5">
+    <thead class="table-dark">
+      <input type="hidden" name="id_semester" value="1">
+      <tr>
+        <th colspan="5">Mata Kuliah {{session.get('namamk')}}</th>
+      </tr>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Nama Soal</th>
+        <th scope="col">Dibuat Oleh</th>
+        <th scope="col">Update</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+     
+        @each ((soals, index) in soal)
+        @if(session.get('edit') == 3)
+        <tr>      
+            <th scope="row">{{ index+1 }}</th>
+            <td>{{ soals.nama_soal }}</td>
+            <td>{{ soals.nama }}</td>
+            <td>{{ soals.updatedAt }}</td>
+
+          <form action="{{ route('/editsoal')}}" method="post">
+            <input type="hidden" name="matakuliah_id" value="{{session.get('id_matakuliah')}}">
+            <input type="hidden" name="hapus" value="{{ soals.id }}">
+            <td>
+              <div class="d-flex">
+                <button type="submit" name="cancel" value="1" class="btn btn-info text-light"
+                  style="margin-right: 1ch; background-color: red;">Hapus</button>
+                <button type="submit" name="cancel" value="2" class="btn btn-info text-light"
+                  style="background-color: darkgrey;">Batal</button>
+              </div>
+            </td>
+          </form>
+        </tr>
+        @else
+        <tr>
+        <form action="{{ route('/soal')}}" method="get">
+          <th scope="row">{{ index+1 }}</th>
+          <td>{{ soals.nama_soal }}</td>
+          <td>{{ soals.nama }}</td>
+          <td>{{ soals.updatedAt }}</td>
+        </form>  
+          <form action="{{ route('/lihatsoal')}}" method="post">
+            <input type="hidden" name="soals_id" value="{{ soals.id }}">
+            <td><button type="submit" class="btn btn-info text-light">Lihat</button></td>
+          </form>
+        </tr>
+        @end
+      @end
+     
+        
+    </tbody>
+  </table>
+</div>
+@endsection
